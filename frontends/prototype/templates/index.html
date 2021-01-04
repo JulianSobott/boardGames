@@ -1,0 +1,17 @@
+{% extends 'template.jinja2' %}
+
+{% block body %}
+    <ul class="list-group">
+        {{ lobby("My Lobby") }}
+        {{ lobby("Another Lobby") }}
+        {{ lobby("Wohhoo") }}
+    </ul>
+    <button class="btn btn-success">Create new lobby</button>
+{% endblock %}
+
+{% macro lobby(name) -%}
+    <li class="list-group-item">
+        <button type="button" class="btn btn-primary" style="width: 500px">
+            <a href="/lobby">{{ name }}</a></button>
+    </li>
+{%- endmacro %}

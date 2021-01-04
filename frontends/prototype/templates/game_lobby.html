@@ -1,0 +1,61 @@
+{% extends "template.jinja2" %}
+
+{% block body %}
+    <div class="container">
+        <div class="teams row">
+            <div class="team1 col">
+                <h2>Team 1</h2>
+                {{ player("Annika") }}
+                {{ player("Me") }}
+                <li class="bg-success list-group-item" style="width: 500px; margin: 20px">
+                    Join
+                </li>
+            </div>
+            <div class="team2 col">
+                <h2>Team 2</h2>
+                {{ player("Tom") }}
+                {{ player("You") }}
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="settings" style="border: 2px solid black; padding: 20px">
+            <form style="width: 500px">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Size</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <div id="emailHelp" class="form-text">Size of the board</div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Another</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1">
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Enable Animations</label>
+                </div>
+
+                <select class="mb-3 form-select" aria-label="Default select example">
+                    <option selected>Modes</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <button class="btn btn-success"><a href="/game">Start game</a></button>
+    </div>
+
+{% endblock %}
+
+
+{% macro player(name) -%}
+    <li class="player bg-primary list-group-item" style="width: 500px; margin: 20px">
+        <img src="{{ url_for("static", filename="account_circle-24px.svg") }}" alt="player">
+        {{ name }}
+    </li>
+{%- endmacro %}

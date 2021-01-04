@@ -1,0 +1,39 @@
+{% extends "template.jinja2" %}
+
+{% block body %}
+    <h2>Games</h2>
+    <div class="games row" style="margin-left: 10px">
+        {{ game("Catan", true) }}
+        {{ game("Activity") }}
+        {{ game("Memory") }}
+    </div>
+    <h2>Players</h2>
+    <div class="players">
+        <ul class="list-group">
+            {{ player("Tom") }}
+            {{ player("Annika") }}
+            {{ player("Jack") }}
+        </ul>
+    </div>
+    <button class="btn btn-success"><a href="/game_lobby">Start game</a></button>
+{% endblock %}
+
+{% macro game(name, active=false) -%}
+    {% set bg = "bg-success" if active else "bg-primary" %}
+    <div class="game card" style="width: 200px; margin-left: 20px">
+        <img src="{{ url_for("static", filename="game.jpg") }}" alt="gameX" width="200px" height="200px">
+        <div class="card body {{ bg }}" style="padding: 10px">
+            <h5 class="card-title">{{ name }}</h5>
+            <p class="card-text">Clemens nutrix sed mire promissios solitudo est.
+                Sunt seculaes experientia secundus, velox luraes.
+                Cur planeta manducare?</p>
+        </div>
+    </div>
+{%- endmacro %}
+
+{% macro player(name) -%}
+    <li class="player bg-primary list-group-item" style="width: 500px; margin: 20px">
+        <img src="{{ url_for("static", filename="account_circle-24px.svg") }}" alt="player">
+        {{ name }}
+    </li>
+{%- endmacro %}
