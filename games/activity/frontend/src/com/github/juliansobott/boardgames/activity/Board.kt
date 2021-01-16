@@ -7,7 +7,7 @@ import processing.core.PApplet
 import java.util.*
 import kotlin.math.floor
 
-class Board(boardSize: Vec2) : Drawable {
+class Board(private val pos: Vec2, boardSize: Vec2) : Drawable {
 
     private val ratios = hashMapOf(
         Category.EXPLAINING to 1,
@@ -55,6 +55,8 @@ class Board(boardSize: Vec2) : Drawable {
     }
 
     override fun draw(d: PApplet) {
+        d.resetMatrix()
+        d.translate(pos.x, pos.y)
         // Board
         for (fieldId in 0..numFields) {
             val pos = fieldPositions[fieldId]
@@ -74,6 +76,7 @@ class Board(boardSize: Vec2) : Drawable {
             fill(d, player.color)
             d.ellipse(pos.x, pos.y, playerSize.x, playerSize.y)
         }
+        d.resetMatrix()
     }
 
     fun setPlayerField(playerId: Int, fieldId: Int) {
