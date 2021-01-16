@@ -21,8 +21,12 @@ class GameArea(private val windowSize: Vec2) : Drawable {
         board = Board(Vec2(windowSize.x / 2, 0F), boardSize)
         timerWidget = TimerWidget(Vec2(0F, 100F))
         wordWidget = WordWidget(Vec2(0F, 200F))
-        nextWordButton = Button(Vec2(0F, 300F), "NextWord") { println("Clicked button") }   // TODO: next word
-        startTimerButton = Button(Vec2(0F, 400F), "Start") { println("Clicked button") }   // TODO: start
+        nextWordButton = Button(Vec2(0F, 300F), "NextWord") {
+            EventManager.publish(Events.REQUEST_NEXT_WORD, RequestNextWord())
+        }
+        startTimerButton = Button(Vec2(0F, 400F), "Start") {
+            EventManager.publish(Events.REQUEST_START_ROUND, RequestStartRond())
+        }
         currentPlayerWidget = textWidget(Vec2(0F, 50F), "TODO: CurrentPlayer")
     }
 
@@ -43,7 +47,11 @@ class TimerWidget(pos: Vec2) : TextWidget(pos, "00:00") {
     private var timeStart: Long = 0
     private var running = false
 
-    fun start() {
+    init {
+        EventManager.subscribe<StartTimer>(Events.START_TIMER) { start() }
+    }
+
+    private fun start() {
         timeStart = System.currentTimeMillis()
         running = true
     }
@@ -68,6 +76,11 @@ class WordWidget(pos: Vec2) : TextWidget(pos, "") {
 
     private var showing = false
     private var word = "PampelmusenPflücker"
+
+    init {
+        EventManager.subscribe<NewWord>(Events.NEW_WORD) { e -> showWord(e.word) }
+        EventManager.subscribe<Timeout>(Events.TIMEOUT) { hide() }
+    }
 
     fun showWord(w: String) {
         showing = true
